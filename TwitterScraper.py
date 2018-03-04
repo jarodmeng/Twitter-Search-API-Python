@@ -56,7 +56,7 @@ class TwitterSearch(object):
             if min_tweet is None:
                 min_tweet = tweets[0]
 
-            continue_search = self.save_tweets(tweets)
+            continue_search = self.save_tweets(tweets, query)
 
             # Our max tweet is the last tweet in the list
             max_tweet = tweets[-1]
@@ -175,7 +175,7 @@ class TwitterSearch(object):
         return urlunparse(url_tupple)
 
     @abstractmethod
-    def save_tweets(self, tweets):
+    def save_tweets(self, tweets, query):
         """
         An abstract method that's called with a list of tweets.
         When implementing this class, you can do whatever you want with these tweets.
@@ -194,7 +194,7 @@ class TwitterSearchImpl(TwitterSearch):
         self.max_tweets = max_tweets
         self.counter = 0
 
-    def save_tweets(self, tweets):
+    def save_tweets(self, tweets, query):
         """
         Just prints out tweets
         :return:
@@ -240,7 +240,7 @@ class TwitterSlicer(TwitterSearch):
             tp.submit(self.perform_search, day_query)
         tp.shutdown(wait=True)
 
-    def save_tweets(self, tweets):
+    def save_tweets(self, tweets, query):
         """
         Just prints out tweets
         :return: True always
